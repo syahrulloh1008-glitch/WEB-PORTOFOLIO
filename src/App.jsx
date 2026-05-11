@@ -1,5 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import SkillsExperience from "./sections/SkillsExperience/SkillsExperience";
+import ProjectsCertificates from "./sections/ProjectsCertificates/ProjectsCertificates";
+import ContactSection from "./sections/ContactSection/ContactSection";
+import ScrollProgressBar from "./components/ScrollProgressBar";
+import useMechanicalSound from "./hooks/useMechanicalSound";
 // ─── Google Fonts Loader ───────────────────────────────────────────────────
 const FontLoader = () => {
   useEffect(() => {
@@ -207,6 +211,10 @@ export default function App() {
         <Navbar />
         <Hero />
         <SkillsExperience />
+        <ProjectsCertificates />
+        <div id="section-contact">
+  <ContactSection />
+</div>
         <footer style={{ padding: 40, textAlign: "center", fontSize: 10, color: "rgba(0,255,255,0.3)" }}>
           ◈ PORTOFOLIO WEB  ◈
         </footer>
