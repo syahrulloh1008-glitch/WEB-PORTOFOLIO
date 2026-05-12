@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useAnimation, animate } from "framer-motion";
+import { motion } from "framer-motion";
 
 // ─── Typewriter Hook ────────────────────────────────────────────────────────
 function useTypewriter(text, startDelay = 1200) {

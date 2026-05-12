@@ -1,5 +1,5 @@
-import { useRef, useState, useEffect, useCallback } from "react";
-import { motion, useInView, AnimatePresence, useDragControls } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 
 // ─── CSS ─────────────────────────────────────────────────────────────────────
 const CSS = `
@@ -189,7 +189,6 @@ function Corners({ accent }) {
     </>
   );
 }
-
 function StatusBadge({ status, accent, accentRgb }) {
   return (
     <div style={{
@@ -346,7 +345,7 @@ function ProjectCard({ proj, index }) {
 
         {/* Buttons */}
         <div style={{ display: "flex", gap: 10 }}>
-          <NeonButton href={proj.demo} accent={proj.accent} accentRgb={proj.accentRgb} label="VIEW DEMO" icon="▶" filled />
+          <NeonButton href={proj.demo} accent={proj.accent} accentRgb={proj.accentRgb} label="OPEN PROJECT" icon="▶" filled />
           <NeonButton href={proj.github} accent={proj.accent} accentRgb={proj.accentRgb} label="GITHUB" icon="⌥" />
         </div>
       </div>
@@ -360,10 +359,11 @@ function NeonButton({ href, accent, accentRgb, label, icon, filled }) {
   return (
     <motion.a
       href={href}
+      target="_blank"
+      rel="noopener noreferrer"
       whileTap={{ scale: 0.96 }}
       onHoverStart={() => setHover(true)}
       onHoverEnd={() => setHover(false)}
-      onClick={(e) => e.preventDefault()}
       style={{
         flex: filled ? "1 1 auto" : "0 0 auto",
         display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
@@ -565,9 +565,8 @@ function CertCard({ cert, onClick, isCenter }) {
 }
 
 // ─── Certificate Slider ────────────────────────────────────────────────────────
-function CertSlider() {
+function CertSlider({ certificates = CERTIFICATES }) {
   const [selected, setSelected] = useState(null);
-  const [offset, setOffset] = useState(0);
   const constraintsRef = useRef(null);
   const CARD_W = 236; // 220 + 16 gap
 
@@ -593,7 +592,7 @@ function CertSlider() {
           <motion.div
             drag="x"
             dragConstraints={{
-              left: -(CARD_W * CERTIFICATES.length - window.innerWidth + 120),
+              left: Math.min(0, -(CARD_W * certificates.length - window.innerWidth + 120)),
               right: 0,
             }}
             dragElastic={0.08}
@@ -606,7 +605,7 @@ function CertSlider() {
             }}
             whileDrag={{ cursor: "grabbing" }}
           >
-            {CERTIFICATES.map((cert, i) => (
+            {certificates.map((cert, i) => (
               <CertCard
                 key={i}
                 cert={cert}
@@ -672,7 +671,7 @@ function SectionHeader({ eyebrow, title, accent, accentRgb }) {
 }
 
 // ─── Root ─────────────────────────────────────────────────────────────────────
-export default function ProjectsCertificates() {
+export default function ProjectsCertificates({ profile }) {
   useEffect(() => {
     if (document.getElementById("proj-cert-css")) return;
     const el = document.createElement("style");
@@ -681,6 +680,9 @@ export default function ProjectsCertificates() {
     document.head.appendChild(el);
     return () => el.remove();
   }, []);
+
+  const projects = profile?.projects || PROJECTS;
+  const certificates = profile?.certificates || CERTIFICATES;
 
   return (
     <div style={{ background: "#050816", color: "#e0e0ff" }}>
@@ -699,7 +701,7 @@ export default function ProjectsCertificates() {
           gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
           gap: 20,
         }}>
-          {PROJECTS.map((proj, i) => (
+          {projects.map((proj, i) => (
             <ProjectCard key={i} proj={proj} index={i} />
           ))}
         </div>
@@ -721,7 +723,7 @@ export default function ProjectsCertificates() {
             accentRgb="168,85,247"
           />
         </div>
-        <CertSlider />
+        <CertSlider certificates={certificates} />
       </section>
     </div>
   );

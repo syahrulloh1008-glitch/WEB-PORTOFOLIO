@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useAnimation } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 
 // ─── Global CSS ──────────────────────────────────────────────────────────────
 const SECTION_CSS = `
@@ -486,7 +486,7 @@ function SectionHeader({ eyebrow, title, accent }) {
 }
 
 // ─── Main Component ──────────────────────────────────────────────────────────
-export default function SkillsExperience() {
+export default function SkillsExperience({ profile }) {
   useEffect(() => {
     if (document.getElementById("skills-exp-css")) return;
     const el = document.createElement("style");
@@ -495,6 +495,15 @@ export default function SkillsExperience() {
     document.head.appendChild(el);
     return () => el.remove();
   }, []);
+
+  const skillGroups = profile?.skills || SKILL_GROUPS;
+  const experiences = profile?.experiences || EXPERIENCES;
+  const stats = profile?.stats || [
+    { label: "CERTIFICATIONS", value: "3+", accent: "#00FFFF" },
+    { label: "PROJECTS DONE", value: "20+", accent: "#A855F7" },
+    { label: "YEARS ACTIVE", value: "7+", accent: "#FF00FF" },
+    { label: "UPTIME SLA", value: "99.9%", accent: "#00FF88" },
+  ];
 
   return (
     <div style={{ background: "#050816", color: "#e0e0ff" }}>
@@ -516,7 +525,7 @@ export default function SkillsExperience() {
           gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
           gap: 20,
         }}>
-          {SKILL_GROUPS.map((group, i) => (
+          {skillGroups.map((group, i) => (
             <SkillCard key={group.id} group={group} index={i} />
           ))}
         </div>
@@ -539,12 +548,7 @@ export default function SkillsExperience() {
             flexWrap: "wrap",
           }}
         >
-          {[
-            { label: "CERTIFICATIONS", value: "3+", accent: "#00FFFF" },
-            { label: "PROJECTS DONE", value: "20+", accent: "#A855F7" },
-            { label: "YEARS ACTIVE", value: "7+", accent: "#FF00FF" },
-            { label: "UPTIME SLA", value: "99.9%", accent: "#00FF88" },
-          ].map((stat) => (
+          {stats.map((stat) => (
             <div key={stat.label} style={{ textAlign: "center" }}>
               <div style={{
                 fontFamily: "'Orbitron', monospace",
@@ -588,12 +592,12 @@ export default function SkillsExperience() {
 
         {/* Timeline */}
         <div style={{ position: "relative" }}>
-          {EXPERIENCES.map((exp, i) => (
+          {experiences.map((exp, i) => (
             <TimelineNode
               key={i}
               exp={exp}
               index={i}
-              isLast={i === EXPERIENCES.length - 1}
+              isLast={i === experiences.length - 1}
             />
           ))}
         </div>

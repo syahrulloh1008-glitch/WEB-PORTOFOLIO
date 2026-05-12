@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { Code, Camera, Briefcase, Mail, Send, Terminal, Wifi, MessageCircle } from "lucide-react";
+import { whatsappLink } from "../../constants";
 
 // ─── CSS ──────────────────────────────────────────────────────────────────────
 const CSS = `
@@ -215,7 +216,7 @@ function SocialIcon({ icon: Icon, label, href, color, colorRgb, delay=0 }) {
 }
 
 // ─── Contact Form ─────────────────────────────────────────────────────────────
-function ContactForm() {
+function ContactForm({ profile }) {
   const [fields, setFields] = useState({ name:"", email:"", subject:"", message:"" });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
@@ -239,9 +240,16 @@ function ContactForm() {
     await delay(600);
     addLog("Encrypting payload...", "#A855F7");
     await delay(700);
-    addLog(`Sending to SMTP server...`, "#00FF88");
+    addLog(`Opening WhatsApp channel...`, "#00FF88");
     await delay(800);
     addLog("✓ TRANSMISSION COMPLETE", "#00FF88");
+    const text = [
+      `Halo ${profile?.name || ""}, saya ${fields.name}.`,
+      fields.subject ? `Subject: ${fields.subject}` : "",
+      `Email: ${fields.email}`,
+      fields.message,
+    ].filter(Boolean).join("\n");
+    window.location.href = whatsappLink(profile?.whatsapp || "083848904397", text);
     setSending(false);
     setSent(true);
   };
@@ -304,7 +312,7 @@ function ContactForm() {
           <div style={{
             fontFamily:"'Share Tech Mono', monospace",
             fontSize:11, color:"rgba(200,200,230,0.45)",
-          }}>Pesan kamu sudah diterima. Akan dibalas dalam 24 jam.</div>
+          }}>WhatsApp sedang dibuka. Kirim pesan dari halaman yang muncul.</div>
         </motion.div>
       ) : (
         <>
@@ -370,15 +378,23 @@ function ContactForm() {
 }
 
 // ─── Info Panel ───────────────────────────────────────────────────────────────
-function InfoPanel() {
+function InfoPanel({ profile }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once:true, margin:"-60px" });
 
   const items = [
-    { icon:<Mail size={14}/>, label:"EMAIL", value:"syahrul@example.com", accent:"#00FFFF", accentRgb:"0,255,255" },
-    { icon:<Wifi size={14}/>, label:"STATUS", value:"Available for hire", accent:"#00FF88", accentRgb:"0,255,136" },
-    { icon:<Terminal size={14}/>, label:"LOCATION", value:"Surabaya, East Java, ID", accent:"#A855F7", accentRgb:"168,85,247" },
+    { icon:<Mail size={14}/>, label:"WHATSAPP", value:profile?.whatsapp || "-", accent:"#00FFFF", accentRgb:"0,255,255" },
+    { icon:<Wifi size={14}/>, label:"STATUS", value:profile?.status || "Available for hire", accent:"#00FF88", accentRgb:"0,255,136" },
+    { icon:<Terminal size={14}/>, label:"LOCATION", value:profile?.location || "Surabaya, East Java, ID", accent:"#A855F7", accentRgb:"168,85,247" },
   ];
+  const iconMap = { github: Code, whatsapp: MessageCircle, instagram: Camera, linkedin: Briefcase };
+  const colorMap = {
+    github: { color:"#fff", colorRgb:"255,255,255" },
+    whatsapp: { color:"#25D366", colorRgb:"37,211,102" },
+    instagram: { color:"#E1306C", colorRgb:"225,48,108" },
+    linkedin: { color:"#0A66C2", colorRgb:"10,102,194" },
+  };
+  const socials = (profile?.socials || []).filter((social) => social.href && social.href !== "#");
 
   return (
     <motion.div
@@ -401,13 +417,13 @@ function InfoPanel() {
           fontFamily:"'Orbitron', monospace",
           fontSize:14, fontWeight:700, color:"#fff",
           marginBottom:12, letterSpacing:"0.05em",
-        }}>OPEN FOR CONNECTION</div>
+        }}>{profile?.name ? `${profile.name.toUpperCase()} // OPEN FOR CONNECTION` : "OPEN FOR CONNECTION"}</div>
         <p style={{
           fontFamily:"'Rajdhani', sans-serif",
           fontSize:14, lineHeight:1.7,
           color:"rgba(200,200,230,0.6)",
         }}>
-          Tertarik kolaborasi, diskusi proyek jaringan, atau sekadar ngobrol soal teknologi? Jangan ragu untuk mengirim pesan. Response time &lt;24 jam.
+          {profile?.intro || "Tertarik kolaborasi, diskusi proyek jaringan, atau sekadar ngobrol soal teknologi? Jangan ragu untuk mengirim pesan. Response time <24 jam."}
         </p>
       </div>
 
@@ -462,10 +478,21 @@ function InfoPanel() {
           marginBottom:20, textAlign:"center",
         }}>// SOCIAL_LINKS.config</div>
         <div style={{ display:"flex", justifyContent:"center", gap:20, flexWrap:"wrap" }}>
-          <SocialIcon icon={Code} label="GITHUB" href="#" color="#fff" colorRgb="255,255,255" delay={0} />
-          <SocialIcon icon={MessageCircle} label="WHATSAPP" href="#" color="#25D366" colorRgb="37,211,102" delay={1} />
-          <SocialIcon icon={Camera} label="INSTAGRAM" href="#" color="#E1306C" colorRgb="225,48,108" delay={2} />
-          <SocialIcon icon={Briefcase} label="LINKEDIN" href="#" color="#0A66C2" colorRgb="10,102,194" delay={3} />
+          {socials.map((social, index) => {
+            const Icon = iconMap[social.type] || Briefcase;
+            const colors = colorMap[social.type] || colorMap.linkedin;
+            return (
+              <SocialIcon
+                key={social.label}
+                icon={Icon}
+                label={social.label}
+                href={social.href}
+                color={colors.color}
+                colorRgb={colors.colorRgb}
+                delay={index}
+              />
+            );
+          })}
         </div>
       </div>
     </motion.div>
@@ -506,7 +533,11 @@ function SectionHeader() {
 }
 
 // ─── Footer ───────────────────────────────────────────────────────────────────
-function Footer() {
+function Footer({ profile }) {
+  const name = profile?.name || "SYAHRUL RAMADHAN";
+  const role = profile?.role || "NETWORK ENGINEER";
+  const location = profile?.location || "SURABAYA ID";
+
   return (
     <footer style={{
       borderTop:"1px solid rgba(0,255,255,0.08)",
@@ -519,7 +550,7 @@ function Footer() {
         color:"rgba(0,255,255,0.2)",
         marginBottom:8,
       }}>
-        ◈ SYAHRUL RAMADHAN · NETWORK ENGINEER · SURABAYA ID ◈
+        {name.toUpperCase()} - {role.toUpperCase()} - {location.toUpperCase()}
       </div>
       <div style={{
         fontFamily:"'Share Tech Mono', monospace",
@@ -533,7 +564,7 @@ function Footer() {
 }
 
 // ─── Main Export ──────────────────────────────────────────────────────────────
-export default function ContactSection() {
+export default function ContactSection({ profile }) {
   useEffect(() => {
     if (document.getElementById("contact-css")) return;
     const el = document.createElement("style");
@@ -577,13 +608,13 @@ export default function ContactSection() {
           }}
             className="contact-grid"
           >
-            <ContactForm />
-            <InfoPanel />
+            <ContactForm profile={profile} />
+            <InfoPanel profile={profile} />
           </div>
         </section>
       </div>
 
-      <Footer />
+      <Footer profile={profile} />
 
       {/* Mobile responsive override */}
       <style>{`
