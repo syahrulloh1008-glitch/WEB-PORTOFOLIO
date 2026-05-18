@@ -13,7 +13,7 @@ export const whatsappLink = (phone, message = "Halo, saya ingin menghubungi tim 
 
 export const groupInfo = {
   title: "WEB PORTOFOLIO",
-  groupName: "Kelompok PKL IT Support",
+  groupName: "Kelompok Tim 7",
   tagline: "Website portfolio kelompok bertema cyberpunk untuk menampilkan identitas, keahlian, sertifikat, dan karya anggota.",
   school: {
     name: "Sekolah Menengah Kejuruan",
@@ -123,7 +123,7 @@ export const certificates = [
 export const projects = [
   {
     title: "WEB PORTOFOLIO KELOMPOK",
-    owner: "Kelompok PKL IT Support",
+    owner: "Kelompok Tim 7",
     desc: "Website portfolio kelompok dengan tema cyberpunk, profil anggota, sertifikat, karya, dan kontak perwakilan.",
     tech: ["React", "Vite", "GitHub Pages"],
     github: "https://github.com/syahrulloh1008-glitch/WEB-PORTOFOLIO",
