@@ -7,6 +7,7 @@ const accentSet = {
 };
 
 const projectRepo = "https://github.com/syahrulloh1008-glitch/WEB-PORTOFOLIO.git";
+const assetPath = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, "")}`;
 
 const whatsappLink = (phone, message = "Halo, saya ingin menghubungi kamu lewat portfolio.") =>
   `https://wa.me/62${phone.replace(/^0/, "")}?text=${encodeURIComponent(message)}`;
@@ -103,7 +104,7 @@ export const profiles = [
     role: "IT Support & Network Practice",
     location: "Indonesia",
     about: "Berfokus pada praktik jaringan LAN, instalasi sistem operasi, dan pengembangan web portfolio.",
-    photoUrl: "/profiles/syahrulloh.jpg",
+    photoUrl: assetPath("profiles/syahrulloh.jpg"),
     skills: [
       { name: "Praktik jaringan LAN", level: 75 },
       { name: "Instalasi sistem operasi", level: 99 },
@@ -125,7 +126,7 @@ export const profiles = [
     role: "IT Support & Network Technician",
     location: "Indonesia",
     about: "Berfokus pada crimping kabel LAN, instalasi sistem operasi, serta penguasaan Mikrotik dan switch.",
-    photoUrl: "/profiles/rofiq.jpg",
+    photoUrl: assetPath("profiles/rofiq.jpg"),
     skills: [
       { name: "Crimping kabel LAN", level: 80 },
       { name: "Instalasi sistem operasi", level: 75 },
@@ -137,7 +138,7 @@ export const profiles = [
     certificate: "Magang PKL sebagai IT Support",
     whatsapp: "083812378082",
     instagram: "https://www.instagram.com/zrofeq/?hl=enutm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
-    github: "",
+    github: "https://github.com/rofeqz",
   }),
   createProfile({
     id: "randy-aryasadewa",
@@ -146,7 +147,7 @@ export const profiles = [
     role: "Computer Service Technician",
     location: "Indonesia",
     about: "Berfokus pada service laptop, cleaning laptop, instalasi sistem operasi, dan penyambungan kabel.",
-    photoUrl: "/profiles/randy.jpg",
+    photoUrl: assetPath("profiles/randy.jpg"),
     skills: [
       { name: "Cleaning laptop", level: 50 },
       { name: "Instalasi sistem operasi", level: 50 },
@@ -167,7 +168,7 @@ export const profiles = [
     role: "Network Technician",
     location: "Indonesia",
     about: "Berfokus pada crimping LAN, instalasi sistem operasi, sambung kabel, dan setting Mikrotik.",
-    photoUrl: "/profiles/rafiki.jpg",
+    photoUrl: assetPath("profiles/rafiki.jpg"),
     skills: [
       { name: "Crimping LAN", level: 100 },
       { name: "Instalasi sistem operasi", level: 75 },
