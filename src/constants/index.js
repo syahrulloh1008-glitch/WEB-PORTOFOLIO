@@ -6,183 +6,159 @@ const accentSet = {
   yellow: { accent: "#FFD43B", accentRgb: "255,212,59" },
 };
 
-const projectRepo = "https://github.com/syahrulloh1008-glitch/WEB-PORTOFOLIO.git";
 const assetPath = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, "")}`;
 
-const whatsappLink = (phone, message = "Halo, saya ingin menghubungi kamu lewat portfolio.") =>
+export const whatsappLink = (phone, message = "Halo, saya ingin menghubungi tim portfolio.") =>
   `https://wa.me/62${phone.replace(/^0/, "")}?text=${encodeURIComponent(message)}`;
 
-const buildSkillGroups = (skills) => [
-  {
-    id: "core-skills",
-    label: "SKILL MATRIX",
-    icon: "SKL",
-    ...accentSet.cyan,
-    skills,
+export const groupInfo = {
+  title: "WEB PORTOFOLIO",
+  groupName: "Kelompok PKL IT Support",
+  tagline: "Website portfolio kelompok bertema cyberpunk untuk menampilkan identitas, keahlian, sertifikat, dan karya anggota.",
+  school: {
+    name: "Sekolah Menengah Kejuruan",
+    program: "Teknik Komputer dan Jaringan",
+    description:
+      "Kami adalah kelompok siswa yang berfokus pada praktik IT support, jaringan komputer, instalasi sistem operasi, service perangkat, dan pengembangan web sebagai media dokumentasi karya.",
   },
-];
-
-const buildExperiences = (items) =>
-  items.map((item, index) => ({
-    period: "ACHIEVEMENT",
-    company: "Portfolio Record",
-    location: "Indonesia",
-    tags: ["Experience", "Achievement"],
-    ...item,
-    ...[accentSet.cyan, accentSet.purple, accentSet.pink, accentSet.green][index % 4],
-  }));
-
-const buildProjects = (name) => [
-  {
-    title: "WEB PORTOFOLIO",
-    subtitle: `${name} Personal Portfolio`,
-    img: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=600&q=80",
-    desc: "Website portfolio kelompok dengan konsep cyberpunk, selector profil anggota, skill matrix, project archive, sertifikat, dan kontak aktif.",
-    tech: ["React", "Vite", "GitHub"],
-    demo: projectRepo,
-    github: projectRepo,
-    status: "LIVE",
-    ...accentSet.cyan,
-  },
-];
-
-const buildCertificates = (title) => [
-  {
-    title,
-    subtitle: "Program Praktik Kerja Lapangan",
-    issuer: "PKL / Internship",
-    year: "2026",
-    id: "PKL-CERT",
-    img: "https://images.unsplash.com/photo-1517842645767-c639042777db?w=500&q=80",
-    ...accentSet.yellow,
-  },
-];
-
-const buildStats = (skills, experiences) => [
-  { label: "SKILLS", value: `${skills.length}`, accent: "#00FFFF" },
-  { label: "EXPERIENCE", value: `${experiences.length}`, accent: "#A855F7" },
-  { label: "PROJECT", value: "1", accent: "#FF00FF" },
-  { label: "CONTACT", value: "READY", accent: "#00FF88" },
-];
-
-const createProfile = ({ id, name, shortName, role, location, about, photoUrl, skills, experiences, certificate, whatsapp, instagram, github }) => ({
-  id,
-  name,
-  shortName,
-  role,
-  location,
-  email: "-",
-  status: "Siap dihubungi untuk kolaborasi dan informasi portfolio.",
-  about,
-  intro: about,
-  photoUrl,
-  whatsapp,
-  instagram,
-  github,
-  contacts: {
-    whatsapp,
-    instagram,
-    github,
-  },
-  socials: [
-    { label: "GITHUB", href: github || "#", type: "github" },
-    { label: "WHATSAPP", href: whatsappLink(whatsapp, `Halo ${name}, saya melihat portfolio kamu.`), type: "whatsapp" },
-    { label: "INSTAGRAM", href: instagram || "#", type: "instagram" },
+  identity: [
+    { label: "ANGGOTA", value: "4" },
+    { label: "PROGRAM", value: "TKJ / IT SUPPORT" },
+    { label: "FOKUS", value: "NETWORK + WEB" },
+    { label: "STATUS", value: "READY" },
   ],
-  skills: buildSkillGroups(skills),
-  stats: buildStats(skills, experiences),
-  experiences: buildExperiences(experiences),
-  projects: buildProjects(name),
-  certificates: buildCertificates(certificate),
-});
+  contact: {
+    representative: "Syahrulloh",
+    email: "syahrulloh1008-glitch@users.noreply.github.com",
+    whatsapp: "083848904397",
+  },
+};
 
-export const profiles = [
-  createProfile({
+export const teamMembers = [
+  {
     id: "syahrulloh",
     name: "Syahrulloh",
-    shortName: "Syahrulloh",
     role: "IT Support & Network Practice",
-    location: "Indonesia",
-    about: "Berfokus pada praktik jaringan LAN, instalasi sistem operasi, dan pengembangan web portfolio.",
     photoUrl: assetPath("profiles/syahrulloh.jpg"),
-    skills: [
-      { name: "Praktik jaringan LAN", level: 75 },
-      { name: "Instalasi sistem operasi", level: 99 },
-    ],
-    experiences: [
-      { role: "Juara Lomba Tahfidz", desc: "Meraih prestasi dalam lomba tahfidz." },
-      { role: "Juara Lomba Baca Kitab Kuning", desc: "Meraih prestasi dalam lomba baca kitab kuning." },
-      { role: "Cerdas Cermat", desc: "Berpengalaman mengikuti kompetisi cerdas cermat." },
-    ],
-    certificate: "Magang PKL sebagai IT Support",
+    skills: ["Praktik jaringan LAN", "Instalasi sistem operasi", "Web portfolio"],
     whatsapp: "083848904397",
     instagram: "https://www.instagram.com/syhrullllllllll_1?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
     github: "https://github.com/syahrulloh1008-glitch",
-  }),
-  createProfile({
+    cv: assetPath("cv/syahrulloh-cv.txt"),
+    ...accentSet.cyan,
+  },
+  {
     id: "moch-rofiq",
-    name: "Moch.Rofiq",
-    shortName: "Rofiq",
+    name: "Moch. Rofiq",
     role: "IT Support & Network Technician",
-    location: "Indonesia",
-    about: "Berfokus pada crimping kabel LAN, instalasi sistem operasi, serta penguasaan Mikrotik dan switch.",
     photoUrl: assetPath("profiles/rofiq.jpg"),
-    skills: [
-      { name: "Crimping kabel LAN", level: 80 },
-      { name: "Instalasi sistem operasi", level: 75 },
-      { name: "Penguasaan Mikrotik dan switch", level: 80 },
-    ],
-    experiences: [
-      { role: "Perakitan PC", desc: "Berpengalaman merakit PC dan menyiapkan perangkat komputer." },
-    ],
-    certificate: "Magang PKL sebagai IT Support",
+    skills: ["Crimping kabel LAN", "Instalasi sistem operasi", "Mikrotik dan switch"],
     whatsapp: "083812378082",
     instagram: "https://www.instagram.com/zrofeq/?hl=enutm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
     github: "https://github.com/rofeqz",
-  }),
-  createProfile({
+    cv: assetPath("cv/rofiq-cv.txt"),
+    ...accentSet.purple,
+  },
+  {
     id: "randy-aryasadewa",
     name: "Randy Aryasadewa",
-    shortName: "Randy",
     role: "Computer Service Technician",
-    location: "Indonesia",
-    about: "Berfokus pada service laptop, cleaning laptop, instalasi sistem operasi, dan penyambungan kabel.",
     photoUrl: assetPath("profiles/randy.jpg"),
-    skills: [
-      { name: "Cleaning laptop", level: 50 },
-      { name: "Instalasi sistem operasi", level: 50 },
-      { name: "Sambung kabel", level: 50 },
-    ],
-    experiences: [
-      { role: "Service Laptop", desc: "Berpengalaman melakukan service dan perawatan laptop." },
-    ],
-    certificate: "Sertifikat PKL di service komputer",
+    skills: ["Cleaning laptop", "Instalasi sistem operasi", "Sambung kabel"],
     whatsapp: "088901904469",
     instagram: "https://www.instagram.com/randysadewaa?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
     github: "https://github.com/randysadewaaa",
-  }),
-  createProfile({
+    cv: assetPath("cv/randy-cv.txt"),
+    ...accentSet.pink,
+  },
+  {
     id: "rafiki-nugraha",
     name: "Rafiki Nugraha",
-    shortName: "Rafiki",
     role: "Network Technician",
-    location: "Indonesia",
-    about: "Berfokus pada crimping LAN, instalasi sistem operasi, sambung kabel, dan setting Mikrotik.",
     photoUrl: assetPath("profiles/rafiki.jpg"),
-    skills: [
-      { name: "Crimping LAN", level: 100 },
-      { name: "Instalasi sistem operasi", level: 75 },
-      { name: "Sambung kabel", level: 80 },
-    ],
-    experiences: [
-      { role: "Setting Mikrotik", desc: "Berpengalaman melakukan konfigurasi dasar Mikrotik." },
-    ],
-    certificate: "Sertifikat PKL di KOMINFO",
+    skills: ["Crimping LAN", "Instalasi sistem operasi", "Setting Mikrotik"],
     whatsapp: "085648475611",
     instagram: "https://www.instagram.com/nugraharafiki/?utm_source=ig_web_button_share_sheet",
     github: "https://github.com/RafikiNugraha",
-  }),
+    cv: assetPath("cv/rafiki-cv.txt"),
+    ...accentSet.green,
+  },
 ];
 
-export const defaultProfile = profiles[0];
-export { whatsappLink };
+export const certificates = [
+  {
+    title: "Magang PKL sebagai IT Support",
+    owner: "Syahrulloh",
+    issuer: "Program Praktik Kerja Lapangan",
+    year: "2026",
+    img: "https://images.unsplash.com/photo-1517842645767-c639042777db?w=500&q=80",
+    ...accentSet.cyan,
+  },
+  {
+    title: "Magang PKL sebagai IT Support",
+    owner: "Moch. Rofiq",
+    issuer: "Program Praktik Kerja Lapangan",
+    year: "2026",
+    img: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=500&q=80",
+    ...accentSet.purple,
+  },
+  {
+    title: "Sertifikat PKL di Service Komputer",
+    owner: "Randy Aryasadewa",
+    issuer: "Program Praktik Kerja Lapangan",
+    year: "2026",
+    img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&q=80",
+    ...accentSet.pink,
+  },
+  {
+    title: "Sertifikat PKL di KOMINFO",
+    owner: "Rafiki Nugraha",
+    issuer: "Program Praktik Kerja Lapangan",
+    year: "2026",
+    img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=500&q=80",
+    ...accentSet.green,
+  },
+];
+
+export const projects = [
+  {
+    title: "WEB PORTOFOLIO KELOMPOK",
+    owner: "Kelompok PKL IT Support",
+    desc: "Website portfolio kelompok dengan tema cyberpunk, profil anggota, sertifikat, karya, dan kontak perwakilan.",
+    tech: ["React", "Vite", "GitHub Pages"],
+    github: "https://github.com/syahrulloh1008-glitch/WEB-PORTOFOLIO",
+    status: "LIVE",
+    img: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=600&q=80",
+    ...accentSet.cyan,
+  },
+  {
+    title: "SERVICE LAPTOP LOG",
+    owner: "Randy Aryasadewa",
+    desc: "Dokumentasi pekerjaan service laptop, cleaning perangkat, instalasi sistem operasi, dan pengecekan dasar hardware.",
+    tech: ["Hardware", "Windows", "Maintenance"],
+    github: "https://github.com/randysadewaaa",
+    status: "DOCS",
+    img: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600&q=80",
+    ...accentSet.pink,
+  },
+  {
+    title: "NETWORK PRACTICE NOTE",
+    owner: "Moch. Rofiq",
+    desc: "Catatan praktik crimping kabel LAN, konfigurasi perangkat jaringan, dan pengenalan Mikrotik serta switch.",
+    tech: ["LAN", "Mikrotik", "Switch"],
+    github: "https://github.com/rofeqz",
+    status: "ARCHIVE",
+    img: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600&q=80",
+    ...accentSet.purple,
+  },
+  {
+    title: "MIKROTIK BASIC CONFIG",
+    owner: "Rafiki Nugraha",
+    desc: "Dokumentasi konfigurasi dasar Mikrotik, penyambungan kabel, instalasi sistem operasi, dan praktik troubleshooting jaringan.",
+    tech: ["Mikrotik", "Networking", "OS Install"],
+    github: "https://github.com/RafikiNugraha",
+    status: "PRACTICE",
+    img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80",
+    ...accentSet.green,
+  },
+];
