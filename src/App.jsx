@@ -398,7 +398,8 @@ const TeamCard = ({ member, index }) => {
       </div>
       <div style={{ padding: 20 }}>
         <h3 style={{ fontSize: 17, color: member.accent, textShadow: `0 0 10px rgba(${member.accentRgb},0.5)`, marginBottom: 5 }}>{member.name}</h3>
-        <p style={{ color: "rgba(224,224,255,0.62)", fontWeight: 600, marginBottom: 14 }}>{member.role}</p>
+        <p style={{ color: "rgba(224,224,255,0.62)", fontWeight: 600, marginBottom: 4 }}>{member.role}</p>
+        {member.classInfo && <p style={{ color: "rgba(224,224,255,0.45)", fontSize: 11, fontFamily: "Share Tech Mono, monospace", marginBottom: 14 }}>{member.classInfo}</p>}
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 18 }}>
           {member.skills.map((skill) => (
             <span key={skill} style={{ fontFamily: "Share Tech Mono, monospace", fontSize: 9, color: `rgba(${member.accentRgb},0.82)`, border: `1px solid rgba(${member.accentRgb},0.32)`, padding: "4px 8px", borderRadius: 2, background: `rgba(${member.accentRgb},0.06)` }}>
