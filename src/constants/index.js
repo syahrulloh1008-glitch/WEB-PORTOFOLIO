@@ -55,7 +55,7 @@ export const teamMembers = [
     classInfo: "Kelas 11 TKJ 1",
     photoUrl: assetPath("profiles/rofiq.jpg"),
     skills: ["Crimping kabel LAN", "Instalasi sistem operasi", "Mikrotik dan switch"],
-    whatsapp: "083812378082",
+    whatsapp: "085124377224",
     instagram: "https://www.instagram.com/zrofeq/?hl=enutm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
     github: "https://github.com/rofeqz",
     cv: assetPath("cv/rofiq-cv.txt"),
