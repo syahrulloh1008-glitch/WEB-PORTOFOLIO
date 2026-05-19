@@ -16,7 +16,7 @@ export const groupInfo = {
   groupName: "Kelompok Tim 7",
   tagline: "Website portfolio kelompok bertema cyberpunk untuk menampilkan identitas, keahlian, sertifikat, dan karya anggota.",
   school: {
-    name: "SMK SURABAYA",
+    name: "SMK RAJASA ",
     program: "Teknik Komputer dan Jaringan",
     description:
       "Kami adalah kelompok siswa yang berfokus pada praktik IT support, jaringan komputer, instalasi sistem operasi, service perangkat, dan pengembangan web sebagai media dokumentasi karya.",
